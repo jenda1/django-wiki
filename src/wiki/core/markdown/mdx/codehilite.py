@@ -75,7 +75,8 @@ class HiliteTreeprocessor(Treeprocessor):
         blocks = root.iter('pre')
         for block in blocks:
             if len(block) == 1 and block[0].tag == 'code':
-                html = highlight(block[0].text, self.config, self.markdown.tab_length)
+                src = block[0].text.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('&quot;', '"')
+                html = highlight(src, self.config, self.markdown.tab_length)
                 placeholder = self.markdown.htmlStash.store(html)
                 # Clear codeblock in etree instance
                 block.clear()
